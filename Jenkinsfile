@@ -13,7 +13,7 @@ pipeline {
     	}
     	stage ('Compile Stage') {
         	steps {
-            	sh 'mvn clean compile'    
+            	sh 'mvn clean package'    
             }
         }
         stage ('Testing Stage') {
