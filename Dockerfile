@@ -1,6 +1,12 @@
-FROM openjdk:8-jdk-alpine
-EXPOSE 6088
-WORKDIR /app 
-COPY target/jenkins-cicd-pipeline.jar jenkins-cicd-pipeline.jar
-ENTRYPOINT [ "java", "-jar", "jenkins-cicd-pipeline.jar" ]
+FROM openjdk:8-jdk-alpine as build
+WORKDIR /app
+COPY pom.xml .
+COPY src src
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf jenkins-cicd-pipeline.jar)
 
+FROM openjdk:8-jdk-alpine
+ARG DEPENDENCY=/app/target/dependency
+COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+ENTRYPOINT ["java","-cp","app:app/lib/*","hello.Application"]
