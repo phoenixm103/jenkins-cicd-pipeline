@@ -3,7 +3,7 @@ def CONTAINER_TAG="newest"
 def DOCKER_HUB_USER="moin123456"      // Change with you'r DockerHub username.
 def DOCKER_HUB_PASSWORD="moin123456"
 def HTTP_PORT="6088"                // This is related to application port
-def mvnHome = tool name: 'Apache Maven 3.6.0', type: 'maven'
+
 pipeline {
     agent any
     stages {
