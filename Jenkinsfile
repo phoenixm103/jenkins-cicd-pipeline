@@ -13,9 +13,8 @@ pipeline {
     		}
     	}
     	stage ('Compile Stage') {
-		steps {
-            	def mvnHome = tool name: 'Apache Maven 3.6.0', type: 'maven'
-    			sh "${mvnHome}/bin/mvn -B clean package"        	
+	    steps {
+      		sh "mvn clean package"        	
             }            
             
             
